@@ -1,0 +1,26 @@
+<div class="limiter animated fadeInLeft">
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-50 p-b-90">
+            <form class="login100-form validate-form flex-sb flex-w">
+                <div class="flex-sb-m w-full p-t-3 p-b-24">
+                    <label class="text-center font-weight-bold" style="width: 100%; font-size: 25px; font-family: Ubuntu-Bold;
+                    color: #403866;">COMPAÑIA</label>
+                </div>
+                <div class="flex-sb-m w-full">
+                    <div class="wrap-input100 m-b-16">
+                        <select (change)="capturarCompany(s.value)" #s class="input100">
+                           <option value="0"> SELECCIONAR UNA COMPAÑIA </option>
+                           <option *ngFor="let cia of cias" value="{{cia.cia}}" > {{cia.razonSocial}} </option>                           
+                        </select>
+                    </div>
+                </div>
+                <div class="container-login100-form-btn m-t-17">
+                    <button (click)="onSumit()" *ngIf="codCia != '0'" class="login100-form-btn" type="button">
+                      INGRESAR
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

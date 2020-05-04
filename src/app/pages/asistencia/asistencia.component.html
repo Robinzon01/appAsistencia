@@ -1,0 +1,16 @@
+<div class="row limiter animated fadeInLeft">
+    <div class="col-md-12">
+        <div class="row">
+            <div *ngFor="let asistencia of asistencias" class="col-md-3 col-lg-6">
+                <div (click)="save(asistencia,d)" #d class="card border-primarymb-3 mb-2 border-primary" style="max-width: 100%; cursor: pointer;">
+                    <div class="card-header border-primary">{{asistencia.nombre}}</div>
+                    <div class="card-body text-primary border-primary" style="background-color: #87ceeb;">
+                        <div class="text-center">
+                            <img [src]="asistencia.foto" class="rounded">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

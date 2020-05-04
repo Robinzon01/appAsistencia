@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img src="assets/images/icons/banner-ico.png" width="30" height="30" alt=""> CDSI
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="search">Search</a>
+            </li>
+
+        </ul>
+        <span *ngIf="username" class="navbar-text text-white mr-sm-2">
+           Usuario : {{username}}
+        </span>
+        <ul class="form-inline my-2 my-lg-0">
+            <button class="btn btn-outline-danger my-2 my-sm-0" (click)="consultar()" type="button">SALIR</button>
+        </ul>
+
+    </div>
+</nav>
