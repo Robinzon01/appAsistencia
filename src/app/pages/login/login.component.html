@@ -14,7 +14,7 @@
 
                 <span *ngIf="f.submitted && f.controls['password'].errors" class="text-danger animated fadeIn">La contraseña debe de ser más de 6 letras</span>
                 <div class="wrap-input100 m-b-16">
-                    <input class="input100" type="password" [(ngModel)]="login.password" required minlength="5" name="password" placeholder="Contraseña">
+                    <input class="input100" type="password" [(ngModel)]="login.password" required minlength="3" name="password" placeholder="Contraseña">
                     <span class="focus-input100"></span>
                 </div>
 
