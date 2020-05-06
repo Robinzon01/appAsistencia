@@ -1,47 +1,42 @@
 <div class="limiter animated fadeInRight">
     <div class="container-login100">
         <div class="wrap-login100 p-t-50 p-b-90">
-            <form class="login100-form validate-form flex-sb flex-w">
-                <span class="login100-form-title">
-                        Crear Nueva Cuenta
-                </span>
-                <span class="text-danger animated fadeIn">El usuario debe tener más 3 letras</span>
+            <span class="login100-form-title">
+                Crear Nueva Cuenta
+            </span>
+            <form [formGroup]="formulario" class="login100-form validate-form flex-sb flex-w m-3" (ngSubmit)="guardar()">
+
+                <span *ngIf="validarUsername" class="text-danger animated fadeIn">El usuario debe tener más 3 letras</span>
                 <div class="wrap-input100 m-b-16">
-                    <input class="form-control input100" type="text" name="username" placeholder="Ingrese usuario">
-                    <span class="focus-input100"></span>
+                    <input class="form-control input100" type="text" name="username" placeholder="Ingrese usuario" formControlName="username" [class.is-invalid]="validarUsername">
                 </div>
 
-                <span class="text-danger animated fadeIn">La contraseña debe tener más 3 letras</span>
+                <span class="text-danger animated fadeIn" *ngIf="validarPassword">La contraseña debe tener más 3 letras</span>
                 <div class="wrap-input100 m-b-16">
-                    <input class="form-control input100" type="password" name="password" placeholder="Ingrese contraseña">
-                    <span class="focus-input100"></span>
+                    <input class="form-control input100" type="password" name="password" placeholder="Ingrese contraseña" formControlName="password" [class.is-invalid]="validarPassword">
                 </div>
 
-                <span class="text-danger animated fadeIn">La contraseña no son iguales</span>
+                <span class="text-danger animated fadeIn" *ngIf="validarPassword2">La contraseña no son iguales</span>
                 <div class="wrap-input100 m-b-16">
-                    <input class="form-control input100" type="password" name="password2" placeholder="Vuelve a ingresar contraseña">
-                    <span class="focus-input100"></span>
+                    <input class="form-control input100" type="password" name="password2" placeholder="Vuelve a ingresar contraseña" formControlName="password2" [class.is-invalid]="validarPassword2">
                 </div>
 
-                <span class="text-danger animated fadeIn">Ingrese un rol</span>
+                <span class="text-danger animated fadeIn" *ngIf="validarRoles">Ingrese un Rol</span>
                 <div class="wrap-input100 m-b-16 input-group">
-                    <select class="custom-select input100" id="inputGroupSelect04" aria-label="Example select with button addon">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="custom-select input100" name="roles" multiple formArrayName="roles" [disabled]="validarRoles">
+                        <option *ngFor="let rol of roles">{{rol}}</option>
                     </select>
                     <div class="input-group-append">
                         <button class="btn btn-outline-success" type="button">+ Nuevo</button>
                     </div>
                 </div>
 
-                <div class="input-group mb-3">
+                <!-- <div class="input-group mb-3">
                     <input type="text" class="form-control input100" placeholder="Nuevo rol" aria-label="Recipient's username" aria-describedby="button-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-outline-danger" type="button">- Eliminar</button>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="flex-sb-m w-full p-t-3 p-b-24">
                     <div class="contact100-form-checkbox">
@@ -59,7 +54,7 @@
                 </div>
 
                 <div class="container-login100-form-btn m-t-17">
-                    <button class="login100-form-btn" type="button">
+                    <button class="login100-form-btn" type="submit">
                             Crear cuenta
                         </button>
                 </div>
