@@ -5,6 +5,7 @@ import { ValidadorService } from '../../services/validador.service';
 import { RolService } from '../../services/rol.service';
 import Swal from 'sweetalert2';
 import { Rol } from '../../models/rol';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-registro',
@@ -14,10 +15,12 @@ export class RegistroComponent implements OnInit {
 
     formulario: FormGroup;
     roles: Rol[];
+    rol: Rol;
     usuario: Usuario;
 
-    constructor(private fb: FormBuilder, private valiServi: ValidadorService, private rolServi: RolService ) {
-      this.crearFormulario();
+    constructor(private fb: FormBuilder, private valiServi: ValidadorService, private rolServi: RolService,
+                private usuServi: UsuarioService ) {
+      this.validarFormulario();
     }
 
     ngOnInit() {
@@ -44,22 +47,29 @@ export class RegistroComponent implements OnInit {
     get validarPassword(): boolean {
       return this.formulario.get('password').invalid && this.formulario.get('password').touched;
     }
-    get validarPassword2(): boolean {
+    /* get validarPassword2(): boolean {
       return this.formulario.get('password2').invalid && this.formulario.get('password2').touched;
-    }
+    } */
     get validarRoles(): boolean {
       return (this.Roles.length === 0) ? false : true;
     }
     get Roles() {
       return this.formulario.get('sRoles') as FormArray;
     }
+    get validarPassword2(): boolean {
+      const pass1 = this.formulario.get('password').value;
+      const pass2 = this.formulario.get('password2').value;
+      return (pass1 === pass2) ? false : true;
+    }
 
     agregarRoles(rol: string) {
+      this.rol = new Rol();
+      this.rol.authority = rol;
       if (this.Roles.length === 0 || this.Roles.length === 1) {
-        this.Roles.push( this.fb.control(rol, Validators.required) );
+          this.Roles.push( this.fb.control(this.rol, Validators.required) );
       } else {
         if (this.Roles.value.indexOf(rol) < 0) {
-          this.Roles.push( this.fb.control(rol, Validators.required) );
+          this.Roles.push( this.fb.control(this.rol, Validators.required) );
         }
       }
     }
@@ -67,18 +77,30 @@ export class RegistroComponent implements OnInit {
     eliminarRol(i: number): void {
         this.Roles.removeAt(i);
     }
-    private crearFormulario(): void {
+    private validarFormulario(): void {
         this.formulario = this.fb.group({
           username: ['', [Validators.required, Validators.minLength(3)]],
           password: ['', [Validators.required, Validators.minLength(3)]],
           password2: ['', Validators.required],
           sRoles: this.fb.array([])
+        }, {
+          validators: this.valiServi.passwordsIguales('password', 'password2')
         });
     }
 
     // METODO QUE NOS PERMITE GUARDAR
     public guardar(): void {
-      console.log(this.formulario);
+      if (this.formulario.invalid) {
+        return;
+      }
+      // console.log(this.formulario);
+      this.usuario = new Usuario();
+      this.usuario.username = this.formulario.get('username').value;
+      this.usuario.password = this.formulario.get('password').value;
+      this.usuario.roles = this.Roles.value;
+      console.warn(this.usuario);
+
+      // this.usuServi.saveUsuario(this.usuario).subscribe();
     }
 
 }
