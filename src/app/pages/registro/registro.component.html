@@ -23,20 +23,23 @@
 
                 <span class="text-danger animated fadeIn" *ngIf="validarRoles">Ingrese un Rol</span>
                 <div class="wrap-input100 m-b-16 input-group">
-                    <select class="custom-select input100" name="roles" multiple formArrayName="roles" [disabled]="validarRoles">
-                        <option *ngFor="let rol of roles">{{rol}}</option>
+                    <select class="custom-select input100" name="roles" (change)="agregarRoles(s.value)" #s>
+                        <option>Seleccione un Rol</option>
+                        <option *ngFor="let rol of roles" [value]="rol">{{rol}}</option>
                     </select>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-success" type="button">+ Nuevo</button>
+                        <button class="btn btn-outline-success" type="button" (click)="agregarRoles()"><span class="material-icons">note_add</span></button>
                     </div>
                 </div>
 
-                <!-- <div class="input-group mb-3">
-                    <input type="text" class="form-control input100" placeholder="Nuevo rol" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div formArrayName="sRoles" class="input-group mb-3" *ngFor="let rol of Roles.controls; let i = index">
+                    <input type="text" class="form-control input100" placeholder="Nuevo rol" [formControlName]="i">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger" type="button">- Eliminar</button>
+                        <button class="btn btn-outline-danger" type="button" (click)="eliminarRol(i)">
+                            <span class="material-icons">delete</span>
+                        </button>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="flex-sb-m w-full p-t-3 p-b-24">
                     <div class="contact100-form-checkbox">
@@ -55,7 +58,7 @@
 
                 <div class="container-login100-form-btn m-t-17">
                     <button class="login100-form-btn" type="submit">
-                            Crear cuenta
+                            Crear cuenta <span class="material-icons">save</span>
                         </button>
                 </div>
 

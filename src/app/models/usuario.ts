@@ -3,5 +3,5 @@ export class Usuario {
     public username: string;
     public password: string;
     public enabled = true;
-    public roles: Array<Rol>;
+    public roles: Rol[];
 }
