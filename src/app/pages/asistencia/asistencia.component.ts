@@ -74,7 +74,7 @@ export class AsistenciaComponent implements OnInit {
             title: 'Ya registraste todas tus asistencias',
             showConfirmButton: false,
             timer: 2000
-          })
+          });
         }
     },
     (err) => {
