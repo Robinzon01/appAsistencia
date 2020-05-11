@@ -10,7 +10,7 @@ import { OtherService } from './other.service';
 })
 export class CompanyService {
 
-  constructor(private http: HttpClient, private other: OtherService) { 
+  constructor(private http: HttpClient, private other: OtherService) {
     // console.warn('Inicia el servicio de compañia');
   }
 

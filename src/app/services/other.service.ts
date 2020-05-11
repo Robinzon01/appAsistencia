@@ -60,14 +60,14 @@ public setRoles(roles: string) {
 
 // METODO QUE NOS PERMITE SALIR
 public limpiar() {
-localStorage.removeItem('token');
-sessionStorage.removeItem('mesaje');
-sessionStorage.removeItem('user');
-sessionStorage.removeItem('roles');
-sessionStorage.removeItem('lat');
-sessionStorage.removeItem('lng');
-sessionStorage.removeItem('cia');
-sessionStorage.removeItem('rs');
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('mesaje');
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('roles');
+    sessionStorage.removeItem('lat');
+    sessionStorage.removeItem('lng');
+    sessionStorage.removeItem('cia');
+    sessionStorage.removeItem('rs');
 }
 
 }

@@ -26,7 +26,7 @@ export class AsistenciaComponent implements OnInit {
   public getAllAsistencias() {
     this.servi.getAllAsistencias().subscribe( (rest: Astenci[]) => {
       this.asistencias = rest;
-      console.warn(this.asistencias);
+      // console.warn(this.asistencias);
     } );
   }
   // METODOS QUE NOS PERMITE GUARDAR EL REGISTRO DE ASISTENCIA

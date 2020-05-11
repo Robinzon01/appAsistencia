@@ -6,11 +6,14 @@ import { RegistroComponent } from './pages/registro/registro.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CompanyComponent } from './pages/company/company.component';
+import { RgtacdeComponent } from './pages/rgtacde/rgtacde.component';
 
 const routes: Routes = [
   { path: 'home'    , component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'registro', component: RegistroComponent },
   { path: 'company', component: CompanyComponent },
+  { path: 'asistencia', component: RgtacdeComponent },
+  { path: 'asistencia/page/:page', component: RgtacdeComponent, canActivate: [AuthGuard] },
   { path: 'login'   , component: LoginComponent },
   { path: '**', redirectTo: 'login' }
 ];

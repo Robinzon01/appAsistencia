@@ -13,6 +13,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { CabezeraComponent } from './pages/cabezera/cabezera.component';
 import { CompanyComponent } from './pages/company/company.component';
 import { AsistenciaComponent } from './pages/asistencia/asistencia.component';
+import { RgtacdeComponent } from './pages/rgtacde/rgtacde.component';
+import { PagiRgtaComponent } from './pages/pagi-rgta/pagi-rgta.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { AsistenciaComponent } from './pages/asistencia/asistencia.component';
     NavbarComponent,
     CabezeraComponent,
     CompanyComponent,
-    AsistenciaComponent
+    AsistenciaComponent,
+    RgtacdeComponent,
+    PagiRgtaComponent
   ],
   imports: [
     BrowserModule,
