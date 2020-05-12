@@ -15,6 +15,7 @@ export class GelocationService {
   public getGelocation(cia: string, user: string): Observable<Gelocation> {
     return this.http.get<Gelocation>(this.other.getUrl() + `/gelo/get/${cia}/${user}`, {headers: this.other.httpHeaders}).pipe(
       map(rest => {
+        // console.log(rest);
         return rest;
       })
     );

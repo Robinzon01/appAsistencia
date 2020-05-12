@@ -3,8 +3,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
 
@@ -25,8 +24,8 @@ export class HomeComponent implements OnInit {
       timer: 3000,
       timerProgressBar: true,
       onOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
       }
     });
     Toast.fire({

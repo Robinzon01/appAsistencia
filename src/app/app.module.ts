@@ -15,6 +15,7 @@ import { CompanyComponent } from './pages/company/company.component';
 import { AsistenciaComponent } from './pages/asistencia/asistencia.component';
 import { RgtacdeComponent } from './pages/rgtacde/rgtacde.component';
 import { PagiRgtaComponent } from './pages/pagi-rgta/pagi-rgta.component';
+import { GelocationComponent } from './pages/gelocation/gelocation.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { PagiRgtaComponent } from './pages/pagi-rgta/pagi-rgta.component';
     CompanyComponent,
     AsistenciaComponent,
     RgtacdeComponent,
-    PagiRgtaComponent
+    PagiRgtaComponent,
+    GelocationComponent
   ],
   imports: [
     BrowserModule,

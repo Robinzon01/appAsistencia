@@ -25,7 +25,7 @@ export class RgtacdeComponent implements OnInit {
           tap(response => {
             console.log('RgtacdeComponent: tap 3');
             (response.content as Rgtacde[]).forEach( rgtacde => {
-              console.warn(rgtacde.usuario);
+               // console.warn(rgtacde.usuario);
             });
           })
         ).subscribe( response => {

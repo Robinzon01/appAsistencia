@@ -17,7 +17,7 @@ export class RgtacdeService {
     return this.http.get(this.other.getUrl() + `/rgta/list/page/${this.other.getCia()}/${page}`, {headers: this.other.httpHeaders}).pipe(
       tap((rest: any) => {
           (rest.content as Rgtacde[]).forEach(rgtacde => {
-            console.log(rgtacde);
+           // console.log(rgtacde);
           });
       }),
       map((response: any) => {

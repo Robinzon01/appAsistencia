@@ -81,7 +81,7 @@ export class AsistenciaComponent implements OnInit {
       console.warn(err);
       Swal.fire({
         icon: 'error',
-        title: `Error`
+        title: `Error en el componente Asistencia`
       });
     }
     );

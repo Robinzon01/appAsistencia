@@ -3,28 +3,48 @@ import { Router } from '@angular/router';
 import { CompanyService } from '../../services/company.service';
 import { Company } from '../../models/company';
 import Swal from 'sweetalert2';
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
-  selector: 'app-company',
-  templateUrl: './company.component.html',
-  styles: []
+    selector: 'app-company',
+    templateUrl: './company.component.html'
 })
 export class CompanyComponent implements OnInit {
 
   // VARIABLES
+  formulario: FormGroup;
   public cias: Company[];
-  public codCia = '0';
 
-  constructor(private servi: CompanyService, private router: Router) {
+  constructor(private fb: FormBuilder, private servi: CompanyService, private router: Router) {
+    this.validarFormulario();
   }
 
   ngOnInit() {
     this.getCias();
   }
+  // VALIDAR CAMPOS DEL FORMULARIO
+  private validarFormulario(): void {
+    this.formulario = this.fb.group({
+      company: ['', Validators.required]
+    });
+  }
+
+  get validarRol(): boolean {
+    return this.formulario.get('company').invalid && this.formulario.get('company').touched;
+  }
 
   // EVENTO PARA EL BOTON INGRESAR
   onSumit() {
-    this.getCompany();
+    if (this.formulario.invalid) {
+      return Object.values(this.formulario.controls).forEach( control => {
+        /* if ( control instanceof FormGroup ){
+           Object.values( control.controls ).forEach( cont => cont.markAllAsTouched() );
+        } */
+        control.markAsTouched();
+      });
+    }
+    console.log(this.formulario.value);
+    sessionStorage.setItem('cia', this.formulario.get('company').value);
+    // sessionStorage.setItem('rs', comp.razonSocial);
     this.router.navigateByUrl('/home'); // NAVEGA HACIA EL HOME
   }
   // METODO QUE NOS PERMITE SELECCIONAR LA COMPAÑIA
@@ -34,24 +54,10 @@ export class CompanyComponent implements OnInit {
       },
       (err) => {
         Swal.fire({
-          icon: 'error',
-          title: `Error`
+          icon: 'warning',
+          title: `Refrescar la pantalla(F5)`
         });
       });
-  }
-
-  public capturarCompany(value: string) {
-    this.codCia = value;
-  }
-
-   // METODO QUE NOS TRAE LOS VALORES DEL SELECT DE COMPAÑIAS
-  public getCompany() {
-    for ( let comp of this.cias) {
-          if (comp.cia === this.codCia) {
-            sessionStorage.setItem('cia', this.codCia);
-            sessionStorage.setItem('rs', comp.razonSocial);
-          }
-    }
   }
 
 }

@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { Rgtacde } from '../models/rgtacde';
 import { OtherService } from './other.service';
 import { Astenci } from '../models/astenci';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -75,9 +76,9 @@ export class AuthService {
   }
   // vamos a traer las asistencias sin registrar
     // VAMOS A TRAER LOS REGISTRO DE HOY
-    public asistenciaSinRegistrar() {
+    public asistenciaSinRegistrar(): Observable<Astenci[]> {
       return this.http.get<Astenci[]>(this.other.getUrl() + `/asten/asHoy/${this.other.getCia()}/${this.other.getUser()}`,
-       {headers: this.other.httpHeaders} ).pipe(
+      {headers: this.other.httpHeaders} ).pipe(
          map(rest => {
            return rest;
          })
