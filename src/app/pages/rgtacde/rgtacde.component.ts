@@ -3,6 +3,7 @@ import { RgtacdeService } from '../../services/rgtacde.service';
 import { tap } from 'rxjs/operators';
 import { Rgtacde } from '../../models/rgtacde';
 import { ActivatedRoute } from '@angular/router';
+import { Usuario } from '../../models/usuario';
 
 
 @Component({
@@ -11,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RgtacdeComponent implements OnInit {
   public rgtacdes: Rgtacde[];
+  private usuario: Usuario;
   paginador: any;
   constructor(private serveRg: RgtacdeService, private actiRouter: ActivatedRoute ) { }
 
@@ -21,7 +23,9 @@ export class RgtacdeComponent implements OnInit {
       if (!page) { // SI NO EXISTE
         page = 0;
       }
-      this.serveRg.getPageRgtacde(page).pipe(
+      this.usuario = new Usuario();
+      this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+      this.serveRg.getPageRgtacde(this.usuario, page).pipe(
           tap(response => {
             console.log('RgtacdeComponent: tap 3');
             (response.content as Rgtacde[]).forEach( rgtacde => {

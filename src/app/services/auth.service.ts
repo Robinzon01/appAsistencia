@@ -1,88 +1,104 @@
 import { Injectable, ɵConsole } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { Login } from '../models/login';
-import { Usuario } from '../models/usuario';
-
-import { map } from 'rxjs/operators';
-import { Rgtacde } from '../models/rgtacde';
-import { OtherService } from './other.service';
-import { Astenci } from '../models/astenci';
 import { Observable } from 'rxjs';
-
+import { Usuario } from '../models/usuario';
+import { Rol } from '../models/rol';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private _usuario: Usuario;
+  private _token: string;
 
-  constructor(private http: HttpClient, private other: OtherService) {}
-
-  // METODO QUE NOS PERIMTE HACER EL LOGIN
-  mlogin( login: Login) {
-    console.warn(this.other.getUrl());
-    const authData = {
-      ...login
-    };
-    return this.http.post(this.other.getUrl() + '/login', authData ).pipe(
-      map( resp => {
-        this.guardarToken( resp['token'], resp['message'], resp['user'].username, resp['user'].authorities );
-        return resp;
-      } )
-    );
-  }
-
-  // METODO QUE NOS PERMITE GUARDAR EL TOKEN
-  private guardarToken(idToken: string, mesaje: string, user: string, roles: []) {
-    sessionStorage.setItem('mesaje', mesaje);
-    this.other.setToken(idToken);
-    this.other.setRoles(JSON.stringify(roles));
-    this.other.setUser(user);
-  }
-
-  // VAMOS A MOSTRAR TODAS LAS ASISTENCIAS
-  public getAllAsistencias() {
-    return this.http.get<Astenci[]>(this.other.getUrl() + `/asten/list/${this.other.getCia()}`, {headers: this.other.httpHeaders} ).pipe(
-      map( rest => {
-        return rest;
-      } )
-    );
-  }
-
-  // METODO QUE NOS PERMITE GUARDAR UN RGTACDE
-  public saveRgtacde(rgtacde: Rgtacde) {
-    const authData = {
-      ...rgtacde
-    };
-    return this.http.post(this.other.getUrl() + '/rgta/save', authData, {headers: this.other.httpHeaders});
-  }
-
-  // METODO QUE NOS PERMITE CREAR NUEVO USUARIO
-  nuevoUsuario(usuario: Usuario) {
-    const authData = {
-      ...usuario,
-      token: true
-    };
-
-  }
-  // VAMOS A TRAER LOS REGISTRO DE HOY
-  public registroHoy() {
-    return this.http.get<Rgtacde[]>(this.other.getUrl() + `/rgta/rgHoy/${this.other.getCia()}/${this.other.getUser()}`,
-     {headers: this.other.httpHeaders} ).pipe(
-       map(rest => {
-         return rest;
-       })
-     );
-  }
-  // vamos a traer las asistencias sin registrar
-    // VAMOS A TRAER LOS REGISTRO DE HOY
-    public asistenciaSinRegistrar(): Observable<Astenci[]> {
-      return this.http.get<Astenci[]>(this.other.getUrl() + `/asten/asHoy/${this.other.getCia()}/${this.other.getUser()}`,
-      {headers: this.other.httpHeaders} ).pipe(
-         map(rest => {
-           return rest;
-         })
-       );
+  constructor(private http: HttpClient) { }
+  // METOD QUE NOS PERMITE OBTENER EL USUARIO
+  public get usuario(): Usuario {
+    if (this._usuario != null) {
+      return this._usuario;
+    } else if (this._usuario == null && sessionStorage.getItem('usuario') != null) {
+      this._usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
+      return this._usuario;
     }
+    return new Usuario();
+  }
+  // METODO QUE NOS PERMITE OBTENER EL TOKEN
+  public get token(): string {
+    if (this._token != null) {
+      return this._token;
+    } else if (this._token == null && sessionStorage.getItem('token') != null) {
+      this._token = sessionStorage.getItem('token');
+      return this._token;
+    }
+    return null;
+  }
+  // METODO QUE NOS PERMITE HACER EL LOGIN
+  login(usuario: Usuario): Observable<any> {
+    //  https://dd52e49b.ngrok.io/
+    //   const urlEndpoint = 'http://appcdsi.duckdns.org:8080/oauth/token';
+    const urlEndpoint = 'https://dd52e49b.ngrok.io/oauth/token';
+    // const urlEndpoint = 'http://localhost:8090/oauth/token';
 
+    const credenciales = btoa('cdsiapp' + ':' + 'r0bincdsi');
+
+    const httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic ' + credenciales
+    });
+
+    let params = new URLSearchParams();
+    params.set('grant_type', 'password');
+    params.set('username', usuario.username);
+    params.set('password', usuario.password);
+    // console.log(params.toString());
+    return this.http.post<any>(urlEndpoint, params.toString(), { headers: httpHeaders });
+  }
+
+  guardarUsuario(accessToken: string): void {
+    let payload = this.obtenerDatosToken(accessToken);
+    // console.log(payload);
+    this._usuario = new Usuario();
+    this._usuario.nombre = payload.nombre;
+    this._usuario.apellido = payload.apellido;
+    this._usuario.email = payload.email;
+    this._usuario.username = payload.user_name;
+    this._usuario.cia = payload.cia;
+    this._usuario.roles = payload.authorities;
+    sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
+  }
+
+  guardarToken(accessToken: string): void {
+    this._token = accessToken;
+    sessionStorage.setItem('token', accessToken);
+  }
+
+  obtenerDatosToken(accessToken: string): any {
+    if (accessToken != null) {
+      return JSON.parse(atob(accessToken.split(".")[1]));
+    }
+    return null;
+  }
+
+  isAuthenticated(): boolean {
+    let payload = this.obtenerDatosToken(this.token);
+    if (payload != null && payload.user_name && payload.user_name.length > 0) {
+      return true;
+    }
+    return false;
+  }
+
+  hasRole(role: Rol): boolean {
+    if (this.usuario.roles.includes(role)) {
+      return true;
+    }
+    return false;
+  }
+
+  logout(): void {
+    this._token = null;
+    this._usuario = null;
+    sessionStorage.clear();
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('usuario');
+  }
 }

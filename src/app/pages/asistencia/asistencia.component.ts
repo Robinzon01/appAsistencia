@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { Astenci } from '../../models/astenci';
 import { Rgtacde } from '../../models/rgtacde';
 import Swal from 'sweetalert2';
+import { AsistenciaService } from '../../services/asistencia.service';
+import { Usuario } from '../../models/usuario';
 
 @Component({
   selector: 'app-asistencia',
@@ -16,12 +17,14 @@ export class AsistenciaComponent implements OnInit {
   public rgtacdes: Rgtacde[];
   private fechaA = new Date();
   estado: true;
-  constructor(private servi: AuthService) {}
+  private usuario: Usuario;
+
+  constructor(private asisService: AsistenciaService) {}
 
   ngOnInit() {
     this. asSinRegistrar();
   }
-
+ /* *****
   // METODO QUE NOS MUESTRA TODAS LAS ASISTENCIAS
   public getAllAsistencias() {
     this.servi.getAllAsistencias().subscribe( (rest: Astenci[]) => {
@@ -29,13 +32,17 @@ export class AsistenciaComponent implements OnInit {
       // console.warn(this.asistencias);
     } );
   }
+  */
   // METODOS QUE NOS PERMITE GUARDAR EL REGISTRO DE ASISTENCIA
   public save(aste: Astenci, div: any) {
     this.rgtacde = new Rgtacde();
+    this.usuario = new Usuario();
+    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    console.log(this.usuario);
     // VAMOS A PASAR LOS VALORES
-    this.rgtacde.usuario = sessionStorage.getItem('user');
+    this.rgtacde.usuario = this.usuario.username;
     this.rgtacde.astenci = aste;
-    this.rgtacde.cia = sessionStorage.getItem('cia');
+    this.rgtacde.cia = this.usuario.cia;
     this.rgtacde.latitud = sessionStorage.getItem('lat');
     this.rgtacde.longuitud = sessionStorage.getItem('lng');
     // MENSAJE DE VERIFICACIÓN CUANDO HACE UN REGISTRO
@@ -50,7 +57,7 @@ export class AsistenciaComponent implements OnInit {
       if (result.value) {
         div.hidden = true;
         // REST SAVE
-        this.servi.saveRgtacde(this.rgtacde).subscribe();
+        this.asisService.saveRgtacde(this.rgtacde).subscribe();
         // MENSAJE DE CONFIRMACION CUANDO REGISTRA
         Swal.fire({
           position: 'center',
@@ -65,7 +72,10 @@ export class AsistenciaComponent implements OnInit {
   }
    // METODO QUE NOS DEVUELVE LAS ASISTENCIA SIN REGISTRAR
    public asSinRegistrar() {
-    this.servi.asistenciaSinRegistrar().subscribe( (rest: Astenci[]) => {
+    this.usuario = new Usuario();
+    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    // console.log(this.usuario);
+    this.asisService.asistenciaSinRegistrar(this.usuario).subscribe( (rest: Astenci[]) => {
         // console.log(rest);
         this.asistencias = rest;
         if (this.asistencias.length === 0) {

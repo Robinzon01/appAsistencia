@@ -20,9 +20,10 @@ export class OtherService {
 
   // METODO QUE NOS TRAE LA URL
   public getUrl() {
-    // private url = 'http://localhost:8080/restfull/api'; // http://localhost:8034/api
-    return  this.url = 'http://localhost:8034/api';
-}
+     return this.url = 'https://dd52e49b.ngrok.io/api'; // http://localhost:8034/api
+    // return  this.url = 'http://localhost:8090/api';
+    // return this.url = 'http://appcdsi.duckdns.org:8080/api';
+  }
 
 // SET TOKEN
 public setToken(token: string) {

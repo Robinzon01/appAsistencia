@@ -8,13 +8,13 @@
                 </span>
                 <span *ngIf="f.submitted && f.controls['username'].errors" class="text-danger animated fadeIn">El usuario debe de ser más de 2 letras</span>
                 <div class="wrap-input100 m-b-16">
-                    <input class="input100" type="text" [(ngModel)]="login.username" required minlength="2" name="username" placeholder="Usuario">
+                    <input class="input100" type="text" [(ngModel)]="usuario.username" required minlength="2" name="username" placeholder="Usuario">
                     <span class="focus-input100"></span>
                 </div>
 
                 <span *ngIf="f.submitted && f.controls['password'].errors" class="text-danger animated fadeIn">La contraseña debe de ser más de 6 letras</span>
                 <div class="wrap-input100 m-b-16">
-                    <input class="input100" type="password" [(ngModel)]="login.password" required minlength="3" name="password" placeholder="Contraseña">
+                    <input class="input100" type="password" [(ngModel)]="usuario.password" required minlength="3" name="password" placeholder="Contraseña">
                     <span class="focus-input100"></span>
                 </div>
 
