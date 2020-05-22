@@ -9,11 +9,7 @@ export class HomeComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    if (sessionStorage.getItem('mesaje')) {
-        this.getMensaje();
-    }
-  }
+  ngOnInit() {}
 
   // METODO QUE NOS BRINDA EL MENSAJE DE BIENVENIDA
   public getMensaje() {

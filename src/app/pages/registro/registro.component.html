@@ -24,18 +24,15 @@
                 <span class="text-danger animated fadeIn" *ngIf="validarRol">Ingrese un Rol</span>
                 <div class="wrap-input100 m-b-16 input-group">
                     <select class="custom-select input100" name="roles" formControlName="rol" (change)="agregarRoles()">
-                        <option>Seleccione un Rol</option>
-                        <option *ngFor="let rol of roles" [value]="rol">{{rol}}</option>
-                    </select>
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-success" type="button" (click)="getRoles()"><span class="material-icons">note_add</span></button>
-                    </div>
+                        <option [ngValue]="undefined">Seleccione un Rol</option>
+                        <option *ngFor="let rol of roles" [ngValue]="rol">{{rol.authority}}</option>
+                    </select>                    
                 </div>
 
                 <div formArrayName="sRoles" class="input-group mb-3" *ngFor="let rol of Roles.controls; let i = index">
                     <div [formGroupName]="i">
                         <!-- <span class="text-danger animated fadeIn">Debe ingresar un rol</span> -->
-                        <input type="text" class="form-control input100" placeholder="Ingrese el nuevo rol" formControlName="authority">
+                        <input type="text" class="form-control input100" formControlName="authority">
                     </div>
                     <div class="input-group-append">
                         <button class="btn btn-outline-danger" type="button" (click)="eliminarRol(i)">

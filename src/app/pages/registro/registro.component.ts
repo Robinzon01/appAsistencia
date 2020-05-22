@@ -6,6 +6,7 @@ import { RolService } from '../../services/rol.service';
 import Swal from 'sweetalert2';
 import { Rol } from '../../models/rol';
 import { UsuarioService } from '../../services/usuario.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-registro',
@@ -19,7 +20,7 @@ export class RegistroComponent implements OnInit {
     usuario: Usuario;
 
     constructor(private fb: FormBuilder, private valiServi: ValidadorService, private rolServi: RolService,
-                private usuServi: UsuarioService ) {
+                private usuServi: UsuarioService, private servi: AuthService ) {
       this.validarFormulario();
     }
 
@@ -29,13 +30,14 @@ export class RegistroComponent implements OnInit {
 
     // CAPTURAR LOS ROLES
     public getAllRoles() {
-      this.rolServi.getListaRoles().subscribe( (rest: Rol[]) => {
+      this.rolServi.getListaRoles().subscribe( rest => {
+        // console.log(rest);
         this.roles = rest;
       },
       (err) => {
         Swal.fire({
           icon: 'error',
-          title: `Error`
+          title: `Error en los roles`
         });
       });
     }
@@ -66,7 +68,7 @@ export class RegistroComponent implements OnInit {
     // DESDE EL EVENTO SELECT
     agregarRoles() {
       const srol = this.formulario.get('rol').value;
-      const rolesFormGroup = this.fb.group({authority: srol});
+      const rolesFormGroup = this.fb.group(srol);
       if (this.Roles.length === 0 || this.Roles.length === 1) {
           this.Roles.push(rolesFormGroup);
       } else {
@@ -76,11 +78,6 @@ export class RegistroComponent implements OnInit {
         }
         if (i === 0) { this.Roles.push(rolesFormGroup); }
       }
-    }
-    // DESDE EL EVENTO AGREGAR
-    getRoles() {
-      const rolesFormGroup = this.fb.group({authority: ['', [Validators.required, Validators.minLength(5)] ]});
-      this.Roles.push(rolesFormGroup);
     }
 
     eliminarRol(i: number): void {
@@ -102,9 +99,6 @@ export class RegistroComponent implements OnInit {
     public guardar(): void {
       if (this.formulario.invalid) {
         return Object.values(this.formulario.controls).forEach( control => {
-          /* if ( control instanceof FormGroup ){
-             Object.values( control.controls ).forEach( cont => cont.markAllAsTouched() );
-          } */
           control.markAsTouched();
         });
       }
@@ -112,8 +106,11 @@ export class RegistroComponent implements OnInit {
       this.usuario = new Usuario();
       this.usuario.username = this.formulario.get('username').value;
       this.usuario.password = this.formulario.get('password').value;
+      this.usuario.cia = this.servi.usuario.cia;
+      this.usuario.enabled = 1;
+      this.usuario.email = 'usuario@cdsi.com.pe';
       this.usuario.roles = this.Roles.value;
-      // console.warn(this.usuario);
+      // console.log(this.usuario);
       // MENSAJE DE VERIFICACIÓN CUANDO HACE UN REGISTRO DE USUARIO
       Swal.fire({
         title: `Está seguro de registrar el usuario ${this.usuario.username}?`,
@@ -124,18 +121,25 @@ export class RegistroComponent implements OnInit {
         confirmButtonText: 'Si'
       }).then((result) => {
         if (result.value) {
-          this.usuServi.saveUsuario(this.usuario).subscribe();
-          // MENSAJE DE CONFIRMACION CUANDO SE REGISTRA
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            text: `Se registro el usuario ${this.usuario.username}`,
-            showConfirmButton: false,
-            timer: 2000
-          });
+          this.usuServi.saveUsuario(this.usuario).subscribe(
+            json => {
+              // MENSAJE DE CONFIRMACION CUANDO SE REGISTRA
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                text: `Se guardo el usuario ${json.usuario.username} con éxito`,
+                showConfirmButton: false,
+                timer: 2000
+              });
+              this.formulario.reset({});
+            },
+            err => {
+              console.error('Código del error desde el backend: ' + err.status);
+              console.error(err.error.errors);
+            }
+          );
         }
       });
-      this.formulario.reset({});
     }
 
 }

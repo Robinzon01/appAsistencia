@@ -7,12 +7,14 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CompanyComponent } from './pages/company/company.component';
 import { RgtacdeComponent } from './pages/rgtacde/rgtacde.component';
+import { GelocationComponent } from './pages/gelocation/gelocation.component';
 
 const routes: Routes = [
-  { path: 'home'    , component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home'    , component: HomeComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'company', component: CompanyComponent },
   { path: 'asistencia', component: RgtacdeComponent },
+  { path: 'colaborador', component: GelocationComponent },
   { path: 'asistencia/page/:page', component: RgtacdeComponent, canActivate: [AuthGuard] },
   { path: 'login'   , component: LoginComponent },
   { path: '**', redirectTo: 'login' }

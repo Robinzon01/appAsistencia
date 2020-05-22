@@ -34,10 +34,9 @@ export class AuthService {
   }
   // METODO QUE NOS PERMITE HACER EL LOGIN
   login(usuario: Usuario): Observable<any> {
-    //  https://dd52e49b.ngrok.io/
     //   const urlEndpoint = 'http://appcdsi.duckdns.org:8080/oauth/token';
-    const urlEndpoint = 'https://dd52e49b.ngrok.io/oauth/token';
-    // const urlEndpoint = 'http://localhost:8090/oauth/token';
+   // const urlEndpoint = 'https://dd52e49b.ngrok.io/oauth/token';
+    const urlEndpoint = 'http://localhost:8080/oauth/token';
 
     const credenciales = btoa('cdsiapp' + ':' + 'r0bincdsi');
 

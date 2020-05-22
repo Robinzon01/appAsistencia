@@ -14,8 +14,9 @@ export class RolService {
 
    // VAMOS A MOSTRAR LA LISTA DE ROLES
    public getListaRoles(): Observable<Rol[]> {
-    return this.http.get<Rol[]>(this.other.getUrl() + '/rol/list', {headers: this.other.httpHeaders} ).pipe(
+    return this.http.get<Rol[]>(this.other.getUrl() + '/rol/list').pipe(
       map(rest => {
+        // console.log(rest);
         return rest;
       })
     );

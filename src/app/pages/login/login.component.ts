@@ -47,13 +47,11 @@ export class LoginComponent implements OnInit {
     if (sessionStorage.getItem('lat') && sessionStorage.getItem('lng') ) { // SI ACEPTO DAR SU UBICACION
       this.servi.login(this.usuario).subscribe( rest => {
         Swal.close(); // SE CIERRA EL MENSAJE
-        // console.warn(rest.access_token);
         this.servi.guardarUsuario(rest.access_token);
         this.servi.guardarToken(rest.access_token);
         this.router.navigateByUrl('/home'); // NAVEGA HACIA EL HOME
       }, err => {
         if (err.status == 400) {
-           // Swal('Error Login', 'Usuario o clave incorrectas!', 'error');
            console.error('Error de Usuario o Clave incorrecta !!');
         }
       });
@@ -63,7 +61,7 @@ export class LoginComponent implements OnInit {
        Swal.fire({
          allowOutsideClick: false, // CLICK FUERA
          icon: 'info',
-         title: 'Debe permitir el acceder a su ubicación.'
+         title: 'Debe permitir acceder a su ubicación.'
        });
        // OBTENER LA UBICACION
        this.getGeolocalizacion();
