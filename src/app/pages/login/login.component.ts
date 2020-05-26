@@ -31,7 +31,8 @@ export class LoginComponent implements OnInit {
   }
   // EVENTO PARA EL BOTON INGRESAR
   onSumit(form: NgForm) {
-
+    // Swal.fire(`Latitud : ${sessionStorage.getItem('lat')} , Longuitud : ${sessionStorage.getItem('lng')}`);
+    
     if (form.invalid) {
       return;
     }
@@ -66,6 +67,7 @@ export class LoginComponent implements OnInit {
        // OBTENER LA UBICACION
        this.getGeolocalizacion();
     }
+
   }
   // METODO QUE NOS PERMITE SABER LA UBICACION DEL USUSARIO
   public getGeolocalizacion() {

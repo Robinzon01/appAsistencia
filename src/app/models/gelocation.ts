@@ -11,4 +11,5 @@ export class Gelocation {
     public urbanizacion: string;
     public estado: string;
     public fInactivo: Date;
+    public autorizacion: string;
 }

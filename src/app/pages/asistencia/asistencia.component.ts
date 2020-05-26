@@ -38,7 +38,7 @@ export class AsistenciaComponent implements OnInit {
     this.rgtacde = new Rgtacde();
     this.usuario = new Usuario();
     this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
-    
+
     // VAMOS A PASAR LOS VALORES
     this.rgtacde.usuario = this.usuario.username;
     this.rgtacde.astenci = aste;

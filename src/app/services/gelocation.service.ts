@@ -15,16 +15,7 @@ export class GelocationService {
   // OBTENER LOS DATOS DE LA GELOCATION
   public getGelocation(usuario: Usuario): Observable<any> {
     return this.http.get<any>(this.other.getUrl() + `/gelo/get/${usuario.cia}/${usuario.username}`).pipe(
-      map(rest => {
-        if (rest.longitud == null) {
-            rest.longitud = sessionStorage.getItem('lng');
-        }
-        if (rest.latitud == null) {
-          rest.latitud = sessionStorage.getItem('lat');
-        }
-        return rest;
-      })
-    );
+      map((rest: any) => rest as Gelocation ) );
   }
   // VAMOS ACTUALIZAR LA GEOLOCALIZACIÓN DE UN USUARIO
   public update(gelocation: Gelocation): Observable<any> {

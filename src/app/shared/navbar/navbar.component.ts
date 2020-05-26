@@ -6,14 +6,13 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styles: []
+  templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit {
 
   username: string;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
 

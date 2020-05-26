@@ -1,4 +1,4 @@
-import { Rol } from './rol';
+// import { Rol } from './rol';
 export class Usuario {
     id: number;
     username: string;
@@ -8,5 +8,5 @@ export class Usuario {
     apellido: string;
     email: string;
     cia: string;
-    roles: Rol[];
+    roles: string[] = [];
 }

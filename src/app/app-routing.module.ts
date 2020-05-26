@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: 'registro', component: RegistroComponent },
   { path: 'company', component: CompanyComponent },
   { path: 'asistencia', component: RgtacdeComponent },
-  { path: 'colaborador', component: GelocationComponent },
-  { path: 'asistencia/page/:page', component: RgtacdeComponent, canActivate: [AuthGuard] },
+  { path: 'gelocation', component: GelocationComponent },
+  { path: 'asistencia/page/:page', component: RgtacdeComponent },
   { path: 'login'   , component: LoginComponent },
   { path: '**', redirectTo: 'login' }
 ];

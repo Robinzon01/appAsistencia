@@ -5,6 +5,7 @@ import { Gelocation } from '../../models/gelocation';
 import { Usuario } from '../../models/usuario';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gelocation',
@@ -15,7 +16,7 @@ export class GelocationComponent implements OnInit {
   public gelocation = new Gelocation();
   formulario: FormGroup;
 
-  constructor(private fb: FormBuilder , private other: OtherService, private serviGelo: GelocationService) {}
+  constructor(private fb: FormBuilder , private other: OtherService, private serviGelo: GelocationService, private router: Router) {}
 
   ngOnInit() {
     this.getGeloByCiaAndUser();
@@ -52,6 +53,7 @@ export class GelocationComponent implements OnInit {
           .subscribe(
             json => {
               Swal.fire('Se ha Actualizado', `${json.mensaje}`, 'success');
+              this.router.navigateByUrl('/home'); // NAVEGA HACIA GEOLOCALIZACION
             },
             err => {
               // this.errores = err.error.errors as string[];
@@ -64,6 +66,12 @@ export class GelocationComponent implements OnInit {
   }
 
   private validarFormulario(gelo: Gelocation): void {
+    if (gelo.longitud == null) {
+        gelo.longitud = sessionStorage.getItem('lng');
+    }
+    if (gelo.latitud == null) {
+        gelo.latitud = sessionStorage.getItem('lat');
+    }
     this.formulario = this.fb.group( {
       id: [gelo.id, Validators.required],
       usuario: [gelo.usuario, [Validators.required]],

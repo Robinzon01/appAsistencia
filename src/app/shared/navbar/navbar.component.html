@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
-        <img src="assets/images/icons/banner-ico.png" width="30" height="30" alt=""> CDSI
+    <a class="navbar-brand">
+        <img src="assets/images/icons/banner-ico.png" width="30" height="30"> CDSI
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -18,7 +18,7 @@
                 <a class="nav-link" routerLink="asistencia">Lista Asistencia</a>
             </li>
             <li class="nav-item" *ngIf="authService.isAuthenticated() && authService.hasRole('ROLE_USER')">
-                <a class="nav-link" routerLink="colaborador">Geolocalización</a>
+                <a class="nav-link" routerLink="gelocation">Geolocalización</a>
             </li>
         </ul>
         <ul class="navbar-nav navbar-right">
@@ -32,7 +32,7 @@
       
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                  <button (click)="logout()" class="dropdown-item" type="submit">
-                     <span class="text-center-small text-danger">Salir</span> 
+                     <!-- <span class="text-center-small text-danger">Salir</span> -->
                      <span class="material-icons text-danger">exit_to_app</span>
                  </button>
               </div>
