@@ -2,7 +2,6 @@ import { Injectable, ɵConsole } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from '../models/usuario';
-import { Rol } from '../models/rol';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +33,7 @@ export class AuthService {
   }
   // METODO QUE NOS PERMITE HACER EL LOGIN
   login(usuario: Usuario): Observable<any> {
-    //   const urlEndpoint = 'http://appcdsi.duckdns.org:8080/oauth/token';
+    // const urlEndpoint = 'http://appcdsi.duckdns.org:8080/oauth/token';
    // const urlEndpoint = 'https://dd52e49b.ngrok.io/oauth/token';
     const urlEndpoint = 'http://localhost:8080/oauth/token';
 

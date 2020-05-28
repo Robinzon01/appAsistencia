@@ -24,5 +24,17 @@ export class UsuarioService {
         return throwError(e);
       }) );
   }
+  // VAMOS A TRAER LOS DATOS DE LA PAGINACION
+  public getPageUsuario(usuario: Usuario, page: number): Observable<any> {
+      return this.http.get(this.other.getUrl() + `/usu/list/page/${usuario.cia}/${page}`).pipe(
+        map((response: any) => {
+          (response.content as Usuario[]).map(usu => {
+              usu.username = usu.username.toUpperCase();
+              return usu;
+          });
+          return response;
+        })
+      );
+    }
 
 }

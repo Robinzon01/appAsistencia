@@ -17,6 +17,7 @@ import { RgtacdeComponent } from './pages/rgtacde/rgtacde.component';
 import { PagiRgtaComponent } from './pages/pagi-rgta/pagi-rgta.component';
 import { GelocationComponent } from './pages/gelocation/gelocation.component';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
+import { UsuarioComponent } from './pages/usuario/usuario.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { TokenInterceptor } from './interceptor/TokenInterceptor';
     AsistenciaComponent,
     RgtacdeComponent,
     PagiRgtaComponent,
-    GelocationComponent
+    GelocationComponent,
+    UsuarioComponent
   ],
   imports: [
     BrowserModule,

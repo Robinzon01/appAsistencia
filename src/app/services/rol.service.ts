@@ -13,8 +13,8 @@ export class RolService {
   constructor(private http: HttpClient, private other: OtherService) { }
 
    // VAMOS A MOSTRAR LA LISTA DE ROLES
-   public getListaRoles(): Observable<Rol[]> {
-    return this.http.get<Rol[]>(this.other.getUrl() + '/rol/list').pipe(
+   public getListaRoles(): Observable<any> {
+    return this.http.get<any>(this.other.getUrl() + '/rol/list').pipe(
       map(rest => {
         // console.log(rest);
         return rest;

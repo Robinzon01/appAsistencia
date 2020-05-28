@@ -15,9 +15,9 @@ import { AuthService } from '../../services/auth.service';
 export class RegistroComponent implements OnInit {
 
     formulario: FormGroup;
-    roles: Rol[];
+    roles: Array<Rol> = [];
     rol: Rol;
-    usuario: Usuario;
+    public usuario = new Usuario();
 
     constructor(private fb: FormBuilder, private valiServi: ValidadorService, private rolServi: RolService,
                 private usuServi: UsuarioService, private servi: AuthService ) {
@@ -35,10 +35,13 @@ export class RegistroComponent implements OnInit {
         this.roles = rest;
       },
       (err) => {
+         console.warn(err.error);
+        /*
         Swal.fire({
           icon: 'error',
           title: `Error en los roles`
         });
+        */
       });
     }
 
@@ -102,23 +105,24 @@ export class RegistroComponent implements OnInit {
           control.markAsTouched();
         });
       }
-     // console.log(this.formulario.value);
-      this.usuario = new Usuario();
+      // console.log(this.formulario.value);
+      // this.usuario = new Usuario();
+      // console.warn(this.formulario.value);
       this.usuario.username = this.formulario.get('username').value;
       this.usuario.password = this.formulario.get('password').value;
       this.usuario.cia = this.servi.usuario.cia;
       this.usuario.enabled = 1;
       this.usuario.email = 'usuario@cdsi.com.pe';
-      this.usuario.roles = this.Roles.value;
+      this.usuario.roles = this.formulario.get('sRoles').value;
       // console.log(this.usuario);
-      // MENSAJE DE VERIFICACIÓN CUANDO HACE UN REGISTRO DE USUARIO
+      // MENSAJE DE VERIFICACIÓN CUANDO HACE UN REGISTRO DE USUARI
       Swal.fire({
         title: `Está seguro de registrar el usuario ${this.usuario.username}?`,
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
+        confirmButtonText: 'SI'
       }).then((result) => {
         if (result.value) {
           this.usuServi.saveUsuario(this.usuario).subscribe(
@@ -127,15 +131,22 @@ export class RegistroComponent implements OnInit {
               Swal.fire({
                 position: 'center',
                 icon: 'success',
-                text: `Se guardo el usuario ${json.usuario.username} con éxito`,
+                text: json.mensaje,
                 showConfirmButton: false,
                 timer: 2000
               });
               this.formulario.reset({});
             },
             err => {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                text: err.error.mensaje,
+                showConfirmButton: false,
+                timer: 2000
+              });
               console.error('Código del error desde el backend: ' + err.status);
-              console.error(err.error.errors);
+              console.error(err.error);
             }
           );
         }
