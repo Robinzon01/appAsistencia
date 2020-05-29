@@ -18,6 +18,7 @@
                       <th scope="col">USUARIO</th>
                       <th scope="col">PASSWORD</th>
                       <th scope="col">ESTADO</th>                      
+                      <th scope="col">ROLES</th>
                       <th scope="col"></th>
                       <th scope="col"></th>
                   </tr>
@@ -27,11 +28,16 @@
                       <th scope="row">{{usuario.id}}</th>
                       <td>{{usuario.username}}</td>
                       <td>{{usuario.password}}</td>
-                      <td>{{usuario.enabled}}</td>                     
+                      <td>{{usuario.enabled}}</td>
+                      <td>
+                        <select class="custom-select" name="roles">
+                            <option *ngFor="let rol of usuario.roles">{{rol.authority}}</option>
+                        </select> 
+                      </td>                     
                       <td>
                           <button type="button" class="btn btn-outline-info">
-                          <span class="material-icons">edit</span>
-                      </button>
+                              <span class="material-icons">edit</span>
+                          </button>
                       </td>
                       <td>
                           <button type="button" class="btn btn-outline-danger">
