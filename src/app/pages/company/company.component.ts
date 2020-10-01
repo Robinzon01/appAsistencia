@@ -14,7 +14,7 @@ export class CompanyComponent implements OnInit {
   formulario: FormGroup;
   public cias: Company[];
 
-  constructor(private fb: FormBuilder, private servi: CompanyService, private router: Router) {
+  constructor(private fb: FormBuilder, public servi: CompanyService, private router: Router) {
     this.validarFormulario();
   }
 

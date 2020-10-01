@@ -25,8 +25,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -132,5 +131,8 @@
       }
     }
   },
-  "defaultProject": "loginApp"
+  "defaultProject": "loginApp",
+  "cli": {
+    "analytics": "52cd5bab-95be-4cbc-8a26-d8c7704d6132"
+  }
 }

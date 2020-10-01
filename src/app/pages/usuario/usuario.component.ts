@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class UsuarioComponent implements OnInit {
   public usuarios: Usuario[];
   paginador: any;
-  constructor(private usuService: UsuarioService, private actiRouter: ActivatedRoute) { }
+  constructor(public usuService: UsuarioService, private actiRouter: ActivatedRoute) { }
 
   ngOnInit() {
         // VAMOS A TRAER EL PAGE DE USUARIO

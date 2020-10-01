@@ -17,9 +17,9 @@ export class AsistenciaComponent implements OnInit {
   public rgtacdes: Rgtacde[];
   private fechaA = new Date();
   estado: true;
-  private usuario: Usuario;
+  public usuario: Usuario;
 
-  constructor(private asisService: AsistenciaService) {}
+  constructor(public asisService: AsistenciaService) {}
 
   ngOnInit() {
     this. asSinRegistrar();
@@ -86,8 +86,7 @@ export class AsistenciaComponent implements OnInit {
             timer: 2000
           });
         }
-    },
-    (err) => {
+    }, (err) => {
       console.warn(err);
       Swal.fire({
         icon: 'error',

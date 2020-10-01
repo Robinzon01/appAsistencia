@@ -19,8 +19,9 @@ export class RegistroComponent implements OnInit {
     rol: Rol;
     public usuario = new Usuario();
 
-    constructor(private fb: FormBuilder, private valiServi: ValidadorService, private rolServi: RolService,
-                private usuServi: UsuarioService, private servi: AuthService ) {
+    constructor(private fb: FormBuilder, public valiServi: ValidadorService, 
+                public rolServi: RolService,
+                public usuServi: UsuarioService, public servi: AuthService ) {
       this.validarFormulario();
     }
 

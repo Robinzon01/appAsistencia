@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private serviGelo: GelocationService, private router: Router) {}
+  constructor(public serviGelo: GelocationService, private router: Router) {}
 
   ngOnInit() {
     this.mensajeGelocalizacion();

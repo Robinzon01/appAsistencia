@@ -16,7 +16,7 @@ export class GelocationComponent implements OnInit {
   public gelocation = new Gelocation();
   formulario: FormGroup;
 
-  constructor(private fb: FormBuilder , private other: OtherService, private serviGelo: GelocationService, private router: Router) {}
+  constructor(private fb: FormBuilder , public other: OtherService, public serviGelo: GelocationService, private router: Router) {}
 
   ngOnInit() {
     this.getGeloByCiaAndUser();

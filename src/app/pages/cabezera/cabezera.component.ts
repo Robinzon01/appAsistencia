@@ -15,7 +15,7 @@ export class CabezeraComponent implements OnInit {
   public gelocation = new Gelocation();
   public company = new Company();
 
-  constructor(private other: OtherService, private serviGelo: GelocationService, private serviCompa: CompanyService) { 
+  constructor(public other: OtherService, public serviGelo: GelocationService, public serviCompa: CompanyService) { 
     this.getGeloByCiaAndUser();
     this.getCompany();
    }

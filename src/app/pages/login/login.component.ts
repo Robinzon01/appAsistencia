@@ -12,13 +12,13 @@ import { Usuario } from '../../models/usuario';
 })
 export class LoginComponent implements OnInit {
 
-  usuario: Usuario;
+  public usuario: Usuario;
   recordar = false;
 
   public lat: number;
   public lng: number;
 
-  constructor( private servi: AuthService, private router: Router) { }
+  constructor( public servi: AuthService, private router: Router) { }
 
   ngOnInit() {
     // OBTENER LA UBICACION
@@ -53,7 +53,13 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/home'); // NAVEGA HACIA EL HOME
       }, err => {
         if (err.status == 400) {
-           console.error('Error de Usuario o Clave incorrecta !!');
+           console.error(err);
+           Swal.close(); // SE CIERRA EL MENSAJE
+           Swal.fire({
+            allowOutsideClick: false, // CLICK FUERA
+            icon: 'info',
+            title: 'Usuario o Clave incorrecta !!'
+          });
         }
       });
     } else {

@@ -12,9 +12,9 @@ import { Usuario } from '../../models/usuario';
 })
 export class RgtacdeComponent implements OnInit {
   public rgtacdes: Rgtacde[];
-  private usuario: Usuario;
+  public usuario: Usuario;
   paginador: any;
-  constructor(private serveRg: RgtacdeService, private actiRouter: ActivatedRoute ) { }
+  constructor(public serveRg: RgtacdeService, private actiRouter: ActivatedRoute ) { }
 
   ngOnInit() {
     // VAMOS A TRAER EL PAGE DE RGTACDDE
